@@ -18,7 +18,7 @@ defineProps<{
 }>()
 </script>
 <template>
-  <UiCard :title="title" class="flex-1">
+  <UiCard :title="title" class="flex flex-col flex-1 min-h-0 overflow-hidden">
     <div class="flex flex-col flex-1 min-h-0 overflow-y-auto -mx-1 px-1">
       <div
         v-if="tasks.length === 0"

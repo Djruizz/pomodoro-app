@@ -25,18 +25,17 @@ const goTo = (to: string) => {
   if (to === '/') {
     router.push(to)
   }
-  if (route.path.startsWith(to)) return
   router.push(to)
 }
 </script>
 <template>
   <aside
-    class="w-14 xl:w-48 shrink-0 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-2.5 flex flex-col gap-1.5"
+    class="w-14 2xl:w-48 shrink-0 bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-2.5 flex flex-col gap-1.5"
   >
     <a
       v-for="link in links"
       :key="link.to"
-      class="flex items-center justify-center xl:justify-start gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150 cursor-pointer"
+      class="flex items-center justify-center 2xl:justify-start gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150 cursor-pointer"
       :class="
         isActive(link.to)
           ? 'bg-cyan-500/10 text-cyan-400'
@@ -45,7 +44,7 @@ const goTo = (to: string) => {
       @click="goTo(link.to)"
     >
       <component :is="link.icon" class="size-[18px] shrink-0" />
-      <span class="hidden xl:block truncate">{{ link.label }}</span>
+      <span class="hidden 2xl:block truncate">{{ link.label }}</span>
       <span
         v-if="$route.path === link.to"
         class="hidden xl:block ml-auto size-1.5 rounded-full bg-cyan-400"

@@ -19,13 +19,15 @@ const showSmallTimer = computed(() => timerStore.running && route.path != '/pomo
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2.5">
           <div class="size-3 rounded-full bg-cyan-400 animate-pulse"></div>
-          <span class="text-2xl font-semibold text-zinc-100 tracking-tight">Pomodoro</span>
+          <span class="text-2xl font-semibold text-zinc-100 tracking-tight hidden sm:block"
+            >Pomodoro</span
+          >
         </div>
         <CurrentProject />
       </div>
       <div class="flex gap-2">
         <SmallTime class="hidden md:flex" />
-        <TaskCounter />
+        <TaskCounter class="hidden md:flex" />
         <SmallPomodoroTimer
           v-if="showSmallTimer"
           @click="$router.push('/pomodoro')"

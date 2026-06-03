@@ -59,51 +59,36 @@ const handleDelete = () => {
   projectsStore.deleteProject(project.value.id)
   router.push('/projects')
 }
+import { useMediaQuery } from '@vueuse/core'
+const isDesktop = useMediaQuery('(min-width: 1024px)')
 </script>
 
 <template>
-  <div v-if="project" class="grid grid-cols-4 grid-rows-1 md:grid-rows-4 gap-3 h-full">
-    <!-- Project Info: 2 cols -->
-    <ProjectInfo :project="project" class="col-span-4 md:col-span-3" />
-    <!-- Time Stats: 2 cols -->
-    <ProjectTimeStats :project="project" class="col-span-4 md:col-span-1" />
-    <!-- Task Summary: 2 cols -->
-    <TodoList
-      title="Project Tasks"
-      :tasks="projectTasks"
-      :project-id="project.id"
-      class="row-span-3 col-span-2"
-    />
-    <UiCard class="col-span-2 row-span-2"> </UiCard>
-    <!-- Quick Notes -->
-    <QuickNotes class="col-span-2 row-span-1" />
-
-    <!-- Quick Actions: 1 col -->
-    <!-- <UiCard class="col-span-1">
-      <div class="flex flex-col gap-2 h-full">
-        <span class="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">
-          Actions
-        </span>
-        <UiButton
-          :icon="PlayCircle"
-          label="Start Timer"
-          variant="solid"
-          class="w-full justify-center"
-          @click="router.push('/pomodoro')"
-        />
-        <UiButton :icon="Edit3" label="Edit" variant="outline" class="w-full justify-center" />
-        <div class="flex-1" />
-        <UiButton
-          :icon="Trash2"
-          label="Delete"
-          variant="ghost"
-          class="w-full justify-center text-red-400 hover:text-red-300 hover:bg-red-500/10"
-          @click="handleDelete"
-        />
-      </div>
-    </UiCard> -->
-
-    <!-- Recent Tasks: full width -->
+  <div v-if="project" class="h-full p-1">
+    <div
+      class="grid gap-3 h-full"
+      :class="{
+        'grid-cols-4 ': isDesktop,
+        'grid-cols-1 sm:grid-cols-2': !isDesktop,
+      }"
+    >
+      <ProjectInfo
+        :project="project"
+        :class="isDesktop ? 'col-span-3' : 'sm:col-span-2 h-[150px]'"
+      />
+      <ProjectTimeStats
+        :project="project"
+        :class="isDesktop ? 'col-span-1' : 'sm:col-span-2 h-[150px]'"
+      />
+      <TodoList
+        title="Project Tasks"
+        :tasks="projectTasks"
+        :project-id="project.id"
+        :class="isDesktop ? 'row-span-3 col-span-2' : 'row-span-2 sm:col-span-1 h-[500px]'"
+      />
+      <UiCard :class="isDesktop ? 'col-span-2 row-span-2' : 'sm:col-span-1 h-[200px] sm:h-auto'" />
+      <QuickNotes :class="isDesktop ? 'col-span-2 row-span-1' : 'h-[200px] sm:h-auto'" />
+    </div>
   </div>
 
   <!-- Project not found -->

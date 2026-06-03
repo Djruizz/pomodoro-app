@@ -9,7 +9,7 @@ defineProps<{
 </script>
 <template>
   <div
-    class="flex flex-col bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-5 gap-4 min-h-0"
+    class="flex flex-col bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-4 gap-3 min-h-0 overflow-hidden"
   >
     <div
       v-if="title || $slots.right || icon"

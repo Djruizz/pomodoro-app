@@ -23,7 +23,12 @@ const hasChanges = computed(() => {
 </script>
 
 <template>
-  <UiCard title="Quick Notes" :icon="MessageSquare" icon-class="text-blue-400">
+  <UiCard
+    title="Quick Notes"
+    :icon="MessageSquare"
+    icon-class="text-blue-400"
+    class="flex flex-col flex-1 min-h-0 overflow-hidden"
+  >
     <template #right>
       <UiButton
         v-if="hasChanges || isSaving"

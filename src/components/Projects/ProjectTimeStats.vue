@@ -24,16 +24,16 @@ const formatTimeDetailed = (seconds: number) => {
 
 <template>
   <UiCard :icon="Timer" icon-class="text-cyan-500" title="Time Focused">
-    <div class="flex items-baseline gap-1">
-      <span class="text-4xl font-bold text-zinc-100 tabular-nums">
+    <div class="flex items-baseline gap-1 text-wrap w-full">
+      <span class="text-2xl xl:text-4xl font-bold text-zinc-100 tabular-nums">
         {{ formatTimeDetailed(project.timeElapsed).hrs }}
       </span>
       <span class="text-lg text-zinc-500">h</span>
-      <span class="text-4xl font-bold text-zinc-100 tabular-nums ml-2">
+      <span class="text-2xl xl:text-4xl font-bold text-zinc-100 tabular-nums ml-2">
         {{ formatTimeDetailed(project.timeElapsed).mins }}
       </span>
       <span class="text-lg text-zinc-500">m</span>
-      <span class="text-4xl font-bold text-zinc-100 tabular-nums ml-2">
+      <span class="text-2xl xl:text-4xl font-bold text-zinc-100 tabular-nums ml-2">
         {{ formatTimeDetailed(project.timeElapsed).secs }}
       </span>
       <span class="text-lg text-zinc-500">s</span>
