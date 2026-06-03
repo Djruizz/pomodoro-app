@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-family: 'Rubik', sans-serif;
+  --color-surface: #18181b;
+  --color-surface-light: #27272a;
+  --color-surface-lighter: #3f3f46;
+  --color-border: rgba(63, 63, 70, 0.5);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-lighter) transparent;
+}
