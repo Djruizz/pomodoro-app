@@ -10,8 +10,10 @@ import UiSelect from '../Ui/UiSelect.vue'
 import { CircleCheck, Hourglass, ListTodo, PauseCircle, PlayCircle } from '@lucide/vue'
 
 import { type Task } from '@/stores/tasks.ts'
+import { useTaskStore } from '@/stores/tasks'
 
 const openModal = ref(false)
+const taskToEdit = ref<Task | null>(null)
 const props = defineProps<{
   tasks: Task[]
   title: string
@@ -25,6 +27,16 @@ const mappedTasks = computed(() => {
   }
   return props.tasks.filter((task) => task.status === filter.value)
 })
+
+const handleEditTask = (task: Task) => {
+  taskToEdit.value = task
+  openModal.value = true
+}
+
+const handleDeleteTask = (id: number) => {
+  const store = useTaskStore()
+  store.deleteTask(id)
+}
 </script>
 <template>
   <UiCard :title="title" class="flex flex-col flex-1 min-h-0 overflow-hidden">
@@ -39,7 +51,7 @@ const mappedTasks = computed(() => {
           { label: 'Complete', value: 'complete', icon: CircleCheck },
           { label: 'Paused', value: 'paused', icon: PauseCircle },
         ]"
-        class="w-36"
+        class="max-w-36"
       />
     </template>
     <div class="flex flex-col flex-1 min-h-0 overflow-y-auto -mx-1 px-1">
@@ -56,7 +68,7 @@ const mappedTasks = computed(() => {
         </div>
       </div>
       <div v-for="task in mappedTasks" :key="task.id" class="py-1">
-        <TaskCard :task="task" />
+        <TaskCard :task="task" @edit="handleEditTask" @delete="handleDeleteTask" />
       </div>
     </div>
     <UiButton
@@ -66,6 +78,6 @@ const mappedTasks = computed(() => {
       size="sm"
       variant="outline"
     />
-    <CreateTaskModal v-model="openModal" :selected-project-id="projectId" />
+    <CreateTaskModal v-model="openModal" :selected-project-id="projectId" :task="taskToEdit" />
   </UiCard>
 </template>

@@ -9,9 +9,9 @@ const route = useRoute()
     <div class="grid grid-cols-1 lg:grid-cols-4 w-full h-full gap-3">
       <div
         class="h-full overflow-hidden"
-        :class="route.params.id ? 'lg:col-span-1' : 'lg:col-span-4'"
+        :class="route.params.id ? 'lg:col-span-1 hidden lg:flex' : 'lg:col-span-4 '"
       >
-        <ProjectsList :class="route.params.id ? 'hidden lg:flex' : ''" class="h-full" />
+        <ProjectsList class="h-full w-full" />
       </div>
       <div v-if="route.params.id" class="col-span-1 lg:col-span-3 h-full overflow-y-auto">
         <router-view></router-view>

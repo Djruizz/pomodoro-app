@@ -52,10 +52,22 @@ export const useTaskStore = defineStore('tasks', () => {
     saveTasks(tasks.value)
   }
 
+  function deleteTask(id: number) {
+    if (!id) return
+    tasks.value = tasks.value.filter((t) => t.id != id)
+    saveTasks(tasks.value)
+  }
+
+  function getTaskById(id: number): Task | undefined {
+    return tasks.value.find((t) => t.id === id)
+  }
+
   return {
     tasks,
     createTask,
     updateTask,
     setStatus,
+    deleteTask,
+    getTaskById,
   }
 })

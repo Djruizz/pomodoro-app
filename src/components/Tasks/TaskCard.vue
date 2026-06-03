@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import type { Task } from '@/stores/tasks'
 import { useTaskStore } from '@/stores/tasks'
-import { ChevronDown, Clock, CheckCircle2, PauseCircle, PlayCircle, Hourglass } from '@lucide/vue'
+import { ChevronDown, Clock, CheckCircle2, PauseCircle, PlayCircle, Hourglass, Pencil, Trash2 } from '@lucide/vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps<{ task: Task }>()
+const emit = defineEmits<{
+  edit: [task: Task]
+  delete: [id: number]
+}>()
 const store = useTaskStore()
 const isOpen = ref(false)
 
@@ -47,6 +51,14 @@ const formatDuration = (seconds?: number) => {
   const secs = seconds % 60
   return `${mins}:${secs.toString().padStart(2, '0')}`
 }
+
+const handleEdit = () => {
+  emit('edit', props.task)
+}
+
+const handleDelete = () => {
+  emit('delete', props.task.id)
+}
 </script>
 
 <template>
@@ -83,6 +95,22 @@ const formatDuration = (seconds?: number) => {
         class="size-4 text-zinc-500 transition-transform duration-200"
         :class="{ 'rotate-180': isOpen }"
       />
+      <div class="flex items-center gap-1">
+        <button
+          class="p-1.5 rounded-md text-zinc-400 hover:text-amber-400 hover:bg-amber-400/10 transition-colors"
+          @click.stop="handleEdit"
+          title="Edit task"
+        >
+          <Pencil class="size-4" />
+        </button>
+        <button
+          class="p-1.5 rounded-md text-zinc-400 hover:text-red-400 hover:bg-red-400/10 transition-colors"
+          @click.stop="handleDelete"
+          title="Delete task"
+        >
+          <Trash2 class="size-4" />
+        </button>
+      </div>
     </div>
 
     <Transition

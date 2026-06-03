@@ -47,7 +47,7 @@ const tasksByStatus = computed(() => {
   const tasks = projectTasks.value
   return {
     complete: tasks.filter((t) => t.status === 'complete').length,
-    inProgress: tasks.filter((t) => t.status === 'in progress').length,
+    inProgress: tasks.filter((t) => t.status === 'in_progress').length,
     paused: tasks.filter((t) => t.status === 'paused').length,
     pending: tasks.filter((t) => t.status === 'pending').length,
     total: tasks.length,
@@ -68,26 +68,30 @@ const isDesktop = useMediaQuery('(min-width: 1024px)')
     <div
       class="grid gap-3 h-full"
       :class="{
-        'grid-cols-4 ': isDesktop,
+        'grid-cols-4 grid-rows-4': isDesktop,
         'grid-cols-1 sm:grid-cols-2': !isDesktop,
       }"
     >
       <ProjectInfo
         :project="project"
-        :class="isDesktop ? 'col-span-3' : 'sm:col-span-2 h-[150px]'"
+        :class="isDesktop ? 'col-span-3' : 'sm:col-span-2 h-[150px] sm:h-auto'"
       />
       <ProjectTimeStats
         :project="project"
-        :class="isDesktop ? 'col-span-1' : 'sm:col-span-2 h-[150px]'"
+        :class="isDesktop ? 'col-span-1' : 'sm:col-span-2 h-[150px] sm:h-auto'"
       />
       <TodoList
         title="Project Tasks"
         :tasks="projectTasks"
         :project-id="project.id"
-        :class="isDesktop ? 'row-span-3 col-span-2' : 'row-span-2 sm:col-span-1 h-[500px]'"
+        :class="
+          isDesktop
+            ? 'col-span-2 row-span-3 max-h-full'
+            : 'row-span-2 sm:col-span-1 h-[500px] sm:h-auto'
+        "
       />
-      <UiCard :class="isDesktop ? 'col-span-2 row-span-2' : 'sm:col-span-1 h-[200px] sm:h-auto'" />
-      <QuickNotes :class="isDesktop ? 'col-span-2 row-span-1' : 'h-[200px] sm:h-auto'" />
+      <UiCard :class="isDesktop ? 'col-span-2 row-span-2' : 'sm:col-span-1 h-[300px] sm:h-auto'" />
+      <QuickNotes :class="isDesktop ? 'col-span-2' : 'sm:col-span-1 h-[150px] sm:h-auto'" />
     </div>
   </div>
 

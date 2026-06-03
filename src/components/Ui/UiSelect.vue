@@ -167,7 +167,7 @@ onBeforeUnmount(() => {
             :style="{
               top: dropdownPos.top + 'px',
               left: dropdownPos.left + 'px',
-              width: dropdownPos.width + 'px',
+              minWidth: dropdownPos.width + 'px',
             }"
           >
             <div class="max-h-60 overflow-y-auto py-1">
@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
                 @click.stop="select(option.value)"
               >
                 <component v-if="option.icon" :is="option.icon" class="size-4 shrink-0" />
-                <span class="flex-1 truncate">{{ option.label }}</span>
+                <span class="flex-1">{{ option.label }}</span>
                 <Check v-if="option.value === modelValue" class="size-4 shrink-0 text-cyan-400" />
               </button>
             </div>
