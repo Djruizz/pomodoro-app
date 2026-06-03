@@ -16,7 +16,7 @@ const statusConfig = computed(() => {
       bg: 'bg-emerald-400/10',
       label: 'Complete',
     },
-    'in progress': {
+    in_progress: {
       icon: PlayCircle,
       color: 'text-cyan-400',
       bg: 'bg-cyan-400/10',
@@ -29,9 +29,15 @@ const statusConfig = computed(() => {
 })
 
 const cycleStatus = () => {
-  const statuses: Task['status'][] = ['paused', 'pending', 'in progress', 'complete']
-  const currentIndex = statuses.indexOf(props.task.status ?? 'paused')
-  const nextStatus = statuses[(currentIndex + 1) % statuses.length]!
+  const statuses: Task['status'][] = ['paused', 'pending', 'in_progress', 'complete']
+
+  const currentStatus = props.task.status ?? 'paused'
+  const currentIndex = statuses.indexOf(currentStatus)
+
+  const safeIndex = currentIndex === -1 ? 0 : currentIndex
+
+  const nextStatus: Task['status'] = statuses[(safeIndex + 1) % statuses.length]!
+
   store.setStatus(props.task.id, nextStatus)
 }
 

@@ -4,7 +4,7 @@ export type Task = {
   id: number
   title: string
   description?: string
-  status: 'complete' | 'in progress' | 'paused' | 'pending'
+  status: 'complete' | 'in_progress' | 'paused' | 'pending'
   duration?: number
   projectId?: number
 }
@@ -43,7 +43,7 @@ export const useTaskStore = defineStore('tasks', () => {
     saveTasks(tasks.value)
   }
 
-  function setStatus(id: number, status: 'complete' | 'in progress' | 'paused' | 'pending') {
+  function setStatus(id: number, status: Task['status']) {
     const task = tasks.value.find((task) => task.id === id)
 
     if (task) {
