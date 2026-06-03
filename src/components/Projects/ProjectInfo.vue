@@ -1,11 +1,18 @@
 <script setup lang="ts">
 import type { Project } from '@/stores/projects'
+import { useProjectsStore } from '@/stores/projects'
 import UiCard from '@/components/Ui/UiCard.vue'
-import { Calendar, FolderOpen } from '@lucide/vue'
+import { Calendar, FolderOpen, Pencil, Trash2 } from '@lucide/vue'
 
-defineProps<{
+const props = defineProps<{
   project: Project
 }>()
+
+const emit = defineEmits<{
+  edit: [project: Project]
+}>()
+
+const store = useProjectsStore()
 
 const formatDate = (timestamp: number) => {
   return new Date(timestamp).toLocaleDateString('en-US', {
@@ -23,6 +30,10 @@ const formatRelativeDate = (timestamp: number) => {
   if (days < 7) return `${days} days ago`
   if (days < 30) return `${Math.floor(days / 7)} weeks ago`
   return formatDate(timestamp)
+}
+
+const handleDelete = () => {
+  store.deleteProject(props.project.id)
 }
 </script>
 
@@ -54,6 +65,23 @@ const formatRelativeDate = (timestamp: number) => {
           <span class="w-px h-3 bg-zinc-700" />
           <span class="text-xs text-zinc-500">{{ formatDate(project.createdAt) }}</span>
         </div>
+      </div>
+      <div class="flex items-center gap-1 shrink-0">
+        <button
+          class="p-2 rounded-lg text-zinc-400 hover:text-cyan-400 hover:bg-zinc-700/50 transition-colors"
+          @click="emit('edit', project)"
+          title="Edit project"
+        >
+          <Pencil class="size-4" />
+        </button>
+        <button
+          v-if="project.id != 1"
+          class="p-2 rounded-lg text-zinc-400 hover:text-red-400 hover:bg-zinc-700/50 transition-colors"
+          @click="handleDelete"
+          title="Delete project"
+        >
+          <Trash2 class="size-4" />
+        </button>
       </div>
     </div>
   </UiCard>

@@ -2,22 +2,13 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useProjectsStore, type Project } from '@/stores/projects'
-import UiCard from '@/components/Ui/UiCard.vue'
 import UiButton from '@/components/Ui/UiButton.vue'
 import TodoList from '@/components/Widgets/TodoList.vue'
+import CreateProjectModal from '@/components/Projects/CreateProjectModal.vue'
 
 import { useTaskStore } from '@/stores/tasks'
-const store = useTaskStore()
 
-import {
-  CheckCircle2,
-  PlayCircle,
-  Hourglass,
-  Trash2,
-  Edit3,
-  ArrowLeft,
-  FolderOpen,
-} from '@lucide/vue'
+import { ArrowLeft, FolderOpen } from '@lucide/vue'
 import ProjectInfo from '@/components/Projects/ProjectInfo.vue'
 import ProjectTimeStats from '@/components/Projects/ProjectTimeStats.vue'
 import QuickNotes from '@/components/Widgets/QuickNotes.vue'
@@ -27,14 +18,11 @@ const taskStore = useTaskStore()
 const route = useRoute()
 const router = useRouter()
 
-const project = ref<Project | undefined>()
+const showModal = ref(false)
+const editingProject = ref<Project | null>(null)
 
-watch(
-  () => route.params.id,
-  () => {
-    project.value = projectsStore.projects.find((p) => p.id.toString() === route.params.id)
-  },
-  { immediate: true },
+const project = computed<Project | undefined>(() =>
+  projectsStore.projects.find((p) => p.id.toString() === route.params.id),
 )
 
 const projectTasks = computed(() => {
@@ -43,23 +31,13 @@ const projectTasks = computed(() => {
   return taskStore.tasks.filter((t) => t.projectId === project.value?.id)
 })
 
-const tasksByStatus = computed(() => {
-  const tasks = projectTasks.value
-  return {
-    complete: tasks.filter((t) => t.status === 'complete').length,
-    inProgress: tasks.filter((t) => t.status === 'in_progress').length,
-    paused: tasks.filter((t) => t.status === 'paused').length,
-    pending: tasks.filter((t) => t.status === 'pending').length,
-    total: tasks.length,
-  }
-})
-
-const handleDelete = () => {
-  if (!project.value) return
-  projectsStore.deleteProject(project.value.id)
-  router.push('/projects')
+const openEdit = (proj: Project) => {
+  editingProject.value = proj
+  showModal.value = true
 }
+
 import { useMediaQuery } from '@vueuse/core'
+import ProjectStats from '@/components/Projects/ProjectStats.vue'
 const isDesktop = useMediaQuery('(min-width: 1024px)')
 </script>
 
@@ -75,6 +53,7 @@ const isDesktop = useMediaQuery('(min-width: 1024px)')
       <ProjectInfo
         :project="project"
         :class="isDesktop ? 'col-span-3' : 'sm:col-span-2 h-[150px] sm:h-auto'"
+        @edit="openEdit"
       />
       <ProjectTimeStats
         :project="project"
@@ -90,9 +69,14 @@ const isDesktop = useMediaQuery('(min-width: 1024px)')
             : 'row-span-2 sm:col-span-1 h-[500px] sm:h-auto'
         "
       />
-      <UiCard :class="isDesktop ? 'col-span-2 row-span-2' : 'sm:col-span-1 h-[300px] sm:h-auto'" />
+      <ProjectStats
+        :project="project"
+        :tasks="projectTasks"
+        :class="isDesktop ? 'col-span-2 row-span-2' : 'sm:col-span-1 h-[300px] sm:h-auto'"
+      />
       <QuickNotes :class="isDesktop ? 'col-span-2' : 'sm:col-span-1 h-[150px] sm:h-auto'" />
     </div>
+    <CreateProjectModal v-model="showModal" :project="editingProject" />
   </div>
 
   <!-- Project not found -->

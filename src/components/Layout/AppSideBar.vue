@@ -47,7 +47,7 @@ const goTo = (to: string) => {
       <span class="hidden 2xl:block truncate">{{ link.label }}</span>
       <span
         v-if="$route.path === link.to"
-        class="hidden xl:block ml-auto size-1.5 rounded-full bg-cyan-400"
+        class="hidden 2xl:block ml-auto size-1.5 rounded-full bg-cyan-400"
       />
     </a>
   </aside>

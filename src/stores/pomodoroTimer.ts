@@ -86,6 +86,7 @@ export const useTimerStore = defineStore('timer', () => {
   function nextSet() {
     if (currentSet.value === 'pomodoro') {
       pomodoroCount.value++
+      projectsStore.currentProject.pomodoros++
       if (pomodoroCount.value % 4 === 0) {
         selectSet('longBreak')
       } else {

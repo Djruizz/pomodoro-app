@@ -15,9 +15,11 @@
     "@lucide/vue": "^1.17.0",
     "@tailwindcss/vite": "^4.3.0",
     "@vueuse/core": "^14.3.0",
+    "chart.js": "^4.4.9",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.3.0",
     "vue": "^3.5.32",
+    "vue-chartjs": "^5.3.2",
     "vue-router": "^5.0.4"
   },
   "devDependencies": {

@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 const store = useProjectsStore()
 import { useProjectsStore, type Project } from '@/stores/projects'
 import { useRoute } from 'vue-router'
-import { Plus, FolderOpen, X } from '@lucide/vue'
+import { Plus, FolderOpen } from '@lucide/vue'
 import CreateProjectModal from '@/components/Projects/CreateProjectModal.vue'
 import UiCard from '@/components/Ui/UiCard.vue'
 import UiButton from '@/components/Ui/UiButton.vue'
@@ -11,15 +11,8 @@ import ProjectCard from '@/components/Projects/ProjectCard.vue'
 const route = useRoute()
 
 const showModal = ref(false)
-const editingProject = ref<Project | null>(null)
 
 const openCreate = () => {
-  editingProject.value = null
-  showModal.value = true
-}
-
-const openEdit = (project: Project) => {
-  editingProject.value = project
   showModal.value = true
 }
 
@@ -29,10 +22,6 @@ const selectProject = (id: number) => {
   router.push({ name: 'project', params: { id: id } })
 }
 const selectedProjectId = computed(() => route.params.id)
-
-const closeProject = () => {
-  router.push('/projects')
-}
 </script>
 
 <template>
@@ -60,11 +49,9 @@ const closeProject = () => {
         :key="project.id"
         :project="project"
         :is-selected="selectedProjectId === project.id?.toString()"
-        @edit="openEdit"
         @select="selectProject"
-        @close="closeProject"
       />
     </div>
-    <CreateProjectModal v-model="showModal" :project="editingProject" />
+    <CreateProjectModal v-model="showModal" />
   </UiCard>
 </template>

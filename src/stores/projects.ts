@@ -6,6 +6,7 @@ export type Project = {
   name: string
   description?: string
   timeElapsed: number
+  pomodoros: number
   color: string
   createdAt: number
   notes?: string
@@ -17,9 +18,10 @@ const STORAGE_KEY = 'projects'
 const CURRENT_PROJECT_KEY = 'current-project'
 const globalProject: Project = {
   id: 1,
-  name: 'Global',
+  name: 'General',
   description: 'All created tasks',
   timeElapsed: 0,
+  pomodoros: 0,
   color: '#00d3f2',
   createdAt: Date.now(),
   notes: '',
@@ -67,6 +69,7 @@ export const useProjectsStore = defineStore('projects', () => {
       id: Date.now(),
       name: '',
       timeElapsed: 0,
+      pomodoros: 0,
       color: PROJECT_COLORS[Math.floor(Math.random() * PROJECT_COLORS.length)]!,
       createdAt: Date.now(),
       ...project,
