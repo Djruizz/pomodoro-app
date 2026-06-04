@@ -42,7 +42,7 @@ onBeforeUnmount(() => document.removeEventListener('click', handleClickOutside))
   <div class="relative" ref="containerRef">
     <button
       type="button"
-      class="flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-200 cursor-pointer text-sm font-medium text-zinc-200"
+      class="flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-200 cursor-pointer text-sm font-medium text-zinc-200"
       :class="[isOpen ? 'ring-1 ring-current/30' : '']"
       :style="{
         backgroundColor: `${currentProjectColor}20`,
