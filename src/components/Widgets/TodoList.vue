@@ -37,6 +37,10 @@ const handleDeleteTask = (id: number) => {
   const store = useTaskStore()
   store.deleteTask(id)
 }
+const handleCreateTask = () => {
+  taskToEdit.value = null
+  openModal.value = true
+}
 </script>
 <template>
   <UiCard :title="title" class="flex flex-col flex-1 min-h-0 overflow-hidden">
@@ -73,7 +77,7 @@ const handleDeleteTask = (id: number) => {
     </div>
     <UiButton
       label="Add Task"
-      @click="openModal = true"
+      @click="handleCreateTask"
       class="shrink-0 w-full justify-center"
       size="sm"
       variant="outline"
