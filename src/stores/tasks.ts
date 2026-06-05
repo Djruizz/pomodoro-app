@@ -7,6 +7,7 @@ export type Task = {
   status: 'complete' | 'in_progress' | 'paused' | 'pending'
   duration?: number
   projectId?: number
+  date?: string
 }
 const TASK_STORAGE_KEY = 'tasks'
 

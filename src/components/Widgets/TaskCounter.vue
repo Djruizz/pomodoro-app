@@ -4,7 +4,9 @@ import { ListChecks } from '@lucide/vue'
 import { useTaskStore } from '@/stores/tasks'
 const store = useTaskStore()
 const pendingTask = computed(() => {
-  return store.tasks.filter((task) => task.status != 'complete').length
+  return store.tasks.filter(
+    (task) => task.status != 'complete' && task.date == new Date().toISOString().slice(0, 10),
+  ).length
 })
 </script>
 <template>

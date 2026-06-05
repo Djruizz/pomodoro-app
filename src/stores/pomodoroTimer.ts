@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch, watchEffect } from 'vue'
 import { useSettingsStore } from './settings'
 import { useProjectsStore } from './projects'
 import { useAudioStore } from './audio'
@@ -105,6 +105,13 @@ export const useTimerStore = defineStore('timer', () => {
   }
   const barColor = computed(() => settingsStore.settings.colors[currentSet.value])
 
+  watchEffect(() => {
+    if (duration.value > 0 && running.value) {
+      document.title = `${formattedTime.value} • Chronest`
+    } else {
+      document.title = `Chronest`
+    }
+  })
   return {
     addProjectProgress,
     initialSeconds,

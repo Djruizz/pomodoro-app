@@ -18,6 +18,7 @@ const props = defineProps<{
   tasks: Task[]
   title: string
   projectId?: number
+  selectedDate?: string
 }>()
 
 const filter = ref<Task['status'] | 'all'>('all')
@@ -82,6 +83,11 @@ const handleCreateTask = () => {
       size="sm"
       variant="outline"
     />
-    <CreateTaskModal v-model="openModal" :selected-project-id="projectId" :task="taskToEdit" />
+    <CreateTaskModal
+      v-model="openModal"
+      :selected-project-id="projectId"
+      :task="taskToEdit"
+      :selected-date="selectedDate"
+    />
   </UiCard>
 </template>

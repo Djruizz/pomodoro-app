@@ -5,7 +5,7 @@ import type { Component } from 'vue'
 const props = withDefaults(
   defineProps<{
     modelValue?: string | number
-    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search'
+    type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search' | 'date'
     label?: string
     name?: string
     placeholder?: string

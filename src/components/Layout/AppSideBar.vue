@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AlarmClockCheck, Home, Folder, Settings } from '@lucide/vue'
+import { AlarmClockCheck, Home, Folder, Settings, CalendarDays } from '@lucide/vue'
 import { compile, computed, type Component } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -11,6 +11,7 @@ type Link = {
 const links: Link[] = [
   { label: 'Home', icon: Home, to: '/' },
   { label: 'Pomodoro', icon: AlarmClockCheck, to: '/pomodoro' },
+  { label: 'Daily Planner', icon: CalendarDays, to: '/daily-planner' },
   { label: 'Projects', icon: Folder, to: '/projects' },
 ]
 const endLinks: Link[] = [{ label: 'Settings', icon: Settings, to: '/settings' }]

@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import type { Task } from '@/stores/tasks'
 import { useTaskStore } from '@/stores/tasks'
-import { ChevronDown, Clock, CheckCircle2, PauseCircle, PlayCircle, Hourglass, Pencil, Trash2 } from '@lucide/vue'
+import {
+  ChevronDown,
+  Clock,
+  CheckCircle2,
+  PauseCircle,
+  PlayCircle,
+  Hourglass,
+  Pencil,
+  Trash2,
+  Calendar,
+} from '@lucide/vue'
 import { ref, computed } from 'vue'
 
 const props = defineProps<{ task: Task }>()
@@ -126,6 +136,10 @@ const handleDelete = () => {
           <p class="text-sm text-zinc-400 mt-3 leading-relaxed">
             {{ task.description || 'No description provided.' }}
           </p>
+          <span v-if="task.date" class="flex items-center gap-1 text-xs text-zinc-500">
+            <Calendar class="size-3" />
+            {{ task.date }}
+          </span>
         </div>
       </div>
     </Transition>

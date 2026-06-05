@@ -6,11 +6,12 @@ import UiButton from '@/components/Ui/UiButton.vue'
 import UiSelect from '../Ui/UiSelect.vue'
 import { useTaskStore, type Task } from '@/stores/tasks.ts'
 import { useProjectsStore, type Project } from '@/stores/projects'
-import { Folder } from '@lucide/vue'
+import { Folder, Calendar } from '@lucide/vue'
 
 const props = defineProps<{
   task?: Task | null
   selectedProjectId?: number
+  selectedDate?: string
 }>()
 
 const openModal = defineModel({ default: false })
@@ -27,7 +28,7 @@ watch(openModal, (open) => {
     taskForm.value = { ...props.task }
   } else if (open) {
     isEditing.value = false
-    taskForm.value = { projectId: props.selectedProjectId }
+    taskForm.value = { projectId: props.selectedProjectId, date: props.selectedDate }
   }
 })
 
@@ -91,6 +92,12 @@ const projectOptions = computed(() =>
         type="number"
         label="Estimated duration (mins)"
         placeholder="15"
+      />
+      <UiInput
+        v-model="taskForm.date"
+        type="date"
+        label="Date"
+        :icon="Calendar"
       />
       <UiInput
         v-model="taskForm.description"
