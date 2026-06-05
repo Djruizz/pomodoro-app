@@ -2,13 +2,16 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useSettingsStore } from './settings'
 import { useProjectsStore } from './projects'
+import { useAudioStore } from './audio'
 
 export type Set = 'pomodoro' | 'shortBreak' | 'longBreak'
 const saveProgressDelay = 5
 export const useTimerStore = defineStore('timer', () => {
   const settingsStore = useSettingsStore()
-  const addProjectProgress = ref(false)
   const projectsStore = useProjectsStore()
+  const audioStore = useAudioStore()
+
+  const addProjectProgress = ref(false)
   //Timer
   const initialSeconds = ref<number>(settingsStore.settings.pomodoro * 60)
   const duration = ref<number>(initialSeconds.value)
@@ -92,8 +95,10 @@ export const useTimerStore = defineStore('timer', () => {
       } else {
         selectSet('shortBreak')
       }
+      audioStore.playSound('PomodoroEnd.mp3')
     } else {
       selectSet('pomodoro')
+      audioStore.playSound('BreakEnd.mp3')
     }
     startTimer()
   }

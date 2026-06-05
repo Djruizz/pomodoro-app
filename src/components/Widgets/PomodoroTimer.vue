@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import UiButton from '@/components/Ui/UiButton.vue'
 import UiCard from '@/components/Ui/UiCard.vue'
 import PomodoroSettings from '@/components/Pomodoro/PomodoroSettings.vue'
