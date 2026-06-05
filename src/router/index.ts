@@ -3,6 +3,7 @@ import Home from '../pages/index.vue'
 import pomodoro from '@/pages/pomodoro.vue'
 import projects from '@/pages/projects.vue'
 import projectView from '@/pages/projects/projectView.vue'
+import settings from '@/pages/settings.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -28,6 +29,11 @@ const router = createRouter({
           props: true,
         },
       ],
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: settings,
     },
   ],
 })

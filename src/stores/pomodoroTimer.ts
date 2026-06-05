@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useSettingsStore } from './settings'
 import { useProjectsStore } from './projects'
 import { useAudioStore } from './audio'
@@ -11,9 +11,10 @@ export const useTimerStore = defineStore('timer', () => {
   const projectsStore = useProjectsStore()
   const audioStore = useAudioStore()
 
-  const addProjectProgress = ref(false)
+  const addProjectProgress = ref(settingsStore.settings.behavior.autoStartPomodoros)
+
   //Timer
-  const initialSeconds = ref<number>(settingsStore.settings.pomodoro * 60)
+  const initialSeconds = ref<number>(settingsStore.settings.timer.pomodoro * 60)
   const duration = ref<number>(initialSeconds.value)
 
   const formattedTime = computed(() => {
@@ -61,7 +62,7 @@ export const useTimerStore = defineStore('timer', () => {
 
   function stopTimer() {
     running.value = false
-    initialSeconds.value = settingsStore.settings[currentSet.value] * 60
+    initialSeconds.value = settingsStore.settings.timer[currentSet.value] * 60
     duration.value = initialSeconds.value
     clearInterval(timer)
   }
@@ -82,7 +83,7 @@ export const useTimerStore = defineStore('timer', () => {
 
   function selectSet(set: Set) {
     currentSet.value = set
-    initialSeconds.value = settingsStore.settings[set] * 60
+    initialSeconds.value = settingsStore.settings.timer[set] * 60
     duration.value = initialSeconds.value
   }
 
@@ -102,12 +103,7 @@ export const useTimerStore = defineStore('timer', () => {
     }
     startTimer()
   }
-  const setColors: Record<Set, string> = {
-    pomodoro: '#22d3ee',
-    shortBreak: '#34d399',
-    longBreak: '#fbbf24',
-  }
-  const barColor = computed(() => setColors[currentSet.value])
+  const barColor = computed(() => settingsStore.settings.colors[currentSet.value])
 
   return {
     addProjectProgress,

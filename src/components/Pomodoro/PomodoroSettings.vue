@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 import UiModal from '@/components/Ui/UiModal.vue'
 import UiInput from '@/components/Ui/UiInput.vue'
@@ -9,10 +9,10 @@ import { useSettingsStore, type PomodoroSettings } from '@/stores/settings'
 const settingsStore = useSettingsStore()
 
 const model = defineModel<boolean>({ default: false })
-const originalSettings = { ...settingsStore.settings }
+const originalSettings = { ...settingsStore.settings.timer }
 const inputErrors = ref<Record<string, string>>({})
 const validateInput = (name: keyof PomodoroSettings) => {
-  const value = settingsStore.settings[name]
+  const value = settingsStore.settings.timer[name]
 
   if (!value || value <= 0) {
     inputErrors.value[name] = 'El valor debe ser mayor a 0'
@@ -23,8 +23,8 @@ const validateInput = (name: keyof PomodoroSettings) => {
   return true
 }
 const handleCancel = () => {
-  settingsStore.settings = { ...originalSettings }
-  inputErrors.value = { pomodoro: '', shortBreak: '', longBreak: '' }
+  settingsStore.settings.timer = { ...originalSettings }
+  inputErrors.value = { pomodoro: '', shortBreak: '', longBreak: '', longBreakInterval: '' }
   model.value = false
 }
 
@@ -36,7 +36,6 @@ const handleSave = () => {
   }
   if (!valid) return
 
-  settingsStore.saveSettings({ ...settingsStore.settings })
   model.value = false
 }
 </script>
@@ -45,7 +44,7 @@ const handleSave = () => {
     <form class="grid grid-cols-2 gap-4">
       <UiInput
         name="pomodoro"
-        v-model="settingsStore.settings.pomodoro"
+        v-model="settingsStore.settings.timer.pomodoro"
         label="Pomodoro duration (mins)"
         required
         :error="inputErrors.pomodoro"
@@ -53,7 +52,7 @@ const handleSave = () => {
       />
       <UiInput
         name="shortBreak"
-        v-model="settingsStore.settings.shortBreak"
+        v-model="settingsStore.settings.timer.shortBreak"
         type="number"
         label="Short break duration (mins)"
         required
@@ -62,7 +61,7 @@ const handleSave = () => {
       ></UiInput>
       <UiInput
         name="longBreak"
-        v-model="settingsStore.settings.longBreak"
+        v-model="settingsStore.settings.timer.longBreak"
         type="text"
         label="Long break duration (mins)"
         class="col-span-2"

@@ -15,6 +15,8 @@ const props = withDefaults(
     size?: 'sm' | 'md' | 'lg'
     disabled?: boolean
     required?: boolean
+    min?: number
+    max?: number
   }>(),
   {
     type: 'text',
@@ -24,6 +26,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   'update:modelValue': [value: string | number]
+  blur: [event: FocusEvent]
 }>()
 
 const sizeClasses = computed(() => {
@@ -68,6 +71,8 @@ const onInput = (e: Event) => {
         :value="modelValue"
         :placeholder="placeholder"
         :disabled="disabled"
+        :min="min"
+        :max="max"
         :class="[
           'w-full bg-zinc-800/50 border rounded-xl text-zinc-100 placeholder-zinc-600 outline-none transition-all duration-150',
           'focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 focus:bg-zinc-800/80',
@@ -79,6 +84,7 @@ const onInput = (e: Event) => {
           sizeClasses,
         ]"
         @input="onInput"
+        @blur="emit('blur', $event)"
       />
     </div>
     <p v-if="error" class="text-xs text-red-400">{{ error }}</p>

@@ -7,9 +7,14 @@ import PomodoroSettings from '@/components/Pomodoro/PomodoroSettings.vue'
 import { Play, Square, Pause, Settings } from '@lucide/vue'
 import { useTimerStore, type Set } from '@/stores/pomodoroTimer'
 import UiSwitch from '../Ui/UiSwitch.vue'
+import { onMounted } from 'vue'
+import { useSettingsStore } from '@/stores/settings'
 
 const timerStore = useTimerStore()
-
+const settingsStore = useSettingsStore()
+onMounted(() => {
+  timerStore.addProjectProgress = settingsStore.settings.behavior.autoStartPomodoros
+})
 const openModal = ref(false)
 </script>
 <template>
