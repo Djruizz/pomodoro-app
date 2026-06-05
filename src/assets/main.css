@@ -13,3 +13,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-surface-lighter) transparent;
 }
+
+body {
+  background-color: #09090b;
+}

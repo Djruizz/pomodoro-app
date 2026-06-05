@@ -18,7 +18,7 @@ const showSmallTimer = computed(() => timerStore.running && route.path != '/pomo
     <div class="w-full flex justify-between items-center">
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-0">
-          <img src="/public/ChronestLogoNoBG.png" alt="Chronest" class="size-8" />
+          <img src="/ChronestLogoNoBG.png" alt="Chronest" class="size-8" />
           <span class="text-2xl font-semibold text-zinc-100 tracking-tight hidden sm:block"
             >hronest</span
           >
